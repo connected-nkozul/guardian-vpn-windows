@@ -70,7 +70,7 @@ namespace FirefoxPrivateNetwork
 #if DEBUG_QA
         public const string UpdateTemplateUrl = "http://127.0.0.1:8080/json/1/FirefoxVPN/{0}/{1}/release/update.json";
 #else
-        public const string UpdateTemplateUrl = "https://aus5.mozilla.org/json/1/FirefoxVPN/{0}/{1}/release/update.json";
+        public const string UpdateTemplateUrl = "https://aus5.mozilla.org/json/1/FirefoxVPN/{0}/{1}/release/update.json?force=1";
 #endif
 
         /// <summary>
