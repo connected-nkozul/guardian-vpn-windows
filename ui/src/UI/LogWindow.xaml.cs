@@ -116,6 +116,7 @@ namespace FirefoxPrivateNetwork.UI
         {
             StringBuilder sb = new StringBuilder();
             var items = new List<WireGuard.Ringlogger.Entry>();
+
             items.AddRange(logView.SelectedItems.Cast<WireGuard.Ringlogger.Entry>().ToArray());
 
             var logEntries = items.OrderBy(i => i.Timestamp).ToList();
