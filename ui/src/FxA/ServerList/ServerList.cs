@@ -18,6 +18,7 @@ namespace FirefoxPrivateNetwork.FxA
     /// </summary>
     public class ServerList
     {
+        private const string DefaultServerCountry = "USA";
         private List<Models.ServerListItem> serverData;
         private Dictionary<int, VPNServer> vpnServers;
 
@@ -84,7 +85,30 @@ namespace FirefoxPrivateNetwork.FxA
         /// <returns>Index of the VPN server in the server list.</returns>
         public int GetServerIndexByIP(string value)
         {
-            return vpnServers.FirstOrDefault(x => x.Value.Endpoint == value).Key;
+            var serverIndex = 0;
+
+            if (string.IsNullOrEmpty(value))
+            {
+                // Gets index of a random server in the default server country
+                Random rand = new Random();
+                var serversInDefaultServerCounty = vpnServers.Where(x => x.Value.Country == DefaultServerCountry).ToDictionary(x => x.Key, x => x.Value);
+                serverIndex = serversInDefaultServerCounty.ElementAt(rand.Next(0, serversInDefaultServerCounty.Count)).Key;
+
+                if (serversInDefaultServerCounty.Count() > 0)
+                {
+                    serverIndex = serversInDefaultServerCounty.ElementAt(rand.Next(0, serversInDefaultServerCounty.Count)).Key;
+                }
+                else
+                {
+                    serverIndex = vpnServers.ElementAt(rand.Next(0, vpnServers.Count)).Key;
+                }
+            }
+            else
+            {
+                serverIndex = vpnServers.FirstOrDefault(x => x.Value.Endpoint == value).Key;
+            }
+
+            return serverIndex;
         }
 
         /// <summary>
